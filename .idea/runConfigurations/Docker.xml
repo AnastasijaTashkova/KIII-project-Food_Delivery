@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="containerName" value="kiii" />
+        <option name="sourceFilePath" value="food-delivery-backend/.gitattributes" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

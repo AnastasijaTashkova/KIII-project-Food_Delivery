@@ -1,0 +1,45 @@
+﻿services:
+  postgres:
+    image: postgres:16
+    container_name: food-delivery-db
+    environment:
+      POSTGRES_DB: fooddelivery
+      POSTGRES_USER: fd
+      POSTGRES_PASSWORD: fd
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fd -d fooddelivery"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./food-delivery-backend
+      dockerfile: Dockerfile
+    container_name: food-delivery-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fooddelivery
+      SPRING_DATASOURCE_USERNAME: fd
+      SPRING_DATASOURCE_PASSWORD: fd
+
+  frontend:
+    build:
+      context: ./food-delivery-frontend
+      dockerfile: Dockerfile
+    container_name: food-delivery-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
