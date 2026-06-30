@@ -1,84 +1,51 @@
-# Испитна задача
 
 За потребите на една компанија за нарачка на храна, потребно е да се развие REST API и UI апликација кои ќе овозможуваат
 управување со нарачките за храна.
 
-## Барања
+## Документација
 
-- **(10 поени)** Потребно е на патеката `/api/dishes/{id}/details` API-то да ги врати деталите за едно јадење со користење на
-  `DisplayDishDetailsDto`. Потоа, во рамки на UI апликацијата на патеката `/dishes/{id}` треба да се прикажат деталите за
-  јадењето со помош на компонентата `DishDetails`. За таа цел, имплементирајте ја логиката во рамки на hook-от `useDishDetails`.
-  Проверка на имплементацијата на ова барање може да направите со тестовите `testFindDishByIdWithDetails` и `testFindDishByIdWithDetailsUi`.
-- **(5 поени)** Потребно е на патеката `/api/dishes` API-то да ги врати сите јадења со користење на
-  `DisplayDishDto`. Потоа, во рамки на UI апликацијата на патеката `/dishes` треба да се прикажат деталите за
-  јадењето со помош на компонентата `DishesPage`. За таа цел, имплементирајте ја логиката во рамки на hook-от `useDishes`.
-  Проверка на имплементацијата на ова барање може да направите со тествите `testFindAllDishes` и `testFindAllDishesUi`.
-- **(15 поени)** Потребно е да се имплементира функционалност за додавање на јадење. Во API-то преку endpoint-от
-  `/api/dishes/add` овозможете додавање на јадење. Искористете ги `CreateDishDto` и `DisplayDishDto`. Во UI апликацијата
-  овозможете додавање на јадење преку компонентата `AddDishDialog`. После додавање на ново јадење приказот на јадењата
-  треба да се освежи. За таа цел, имплементирајте ја логиката во рамки на hook-от `useDishes`.
-  За тестирање искористете ги `testAddDish` и `testAddDishUi`.
-- **(15 поени)** Потребно е да се имплементира функционалност за ажурирање на јадење. Во API-то преку endpoint-от
-  `/api/dishes/{id}/edit` овозможете ажурирање на јадење. Искористете ги `CreateDishDto` и `DisplayDishDto`. Во UI апликацијата
-  овозможете додавање на јадење преку компонентата `EditDishDialog`. После ажурирање на некое јадење приказот на јадењата
-  треба да се освежи. За таа цел, имплементирајте ја логиката во рамки на hook-от `useDishes`.
-  За тестирање искористете ги `testEditDish` и `testEditDishUi`.
-- **(5 поени)** Потребно е да се имплементира функционалност за бришење на јадење. Во API-то преку endpoint-от
-  `/api/dishes/{id}/delete` овозможете ажурирање на јадење. Искористете го `DisplayDishDto`. Во UI апликацијата
-  овозможете додавање на јадење преку компонентата `DeleteDishDialog`. После бришење на некое јадење приказот на јадењата
-  треба да се освежи. За таа цел, имплементирајте ја логиката во рамки на hook-от `useDishes`.
-  За тестирање искористете ги `testDeleteDish` и `testDeleteDishUi`.
-- **(10 поени)** Потребно е да се имплементира функционалност за нарачки. Во API-то, endpoint-от `/api/orders/pending` треба да
-  ја враќа нарачката за тековно најавениот корисник којашто е во тек (PENDING). Ако таква не постои, тогаш треба да се креира.
-  Искористете го `DisplayOrderDto`. Во UI апликацијата, на патеката `/orders` овозможете приказ на нарачката којашто е во тек
-  (PENDING) со користење на компонентата `OrderList`. За таа цел, имплементирајте ја логиката во рамки на hook-от `useOrder`.
-  За тестирање искористете ги `testFindOrCreatePendingOrder` и `testFindOrCreatePendingOrderUi`.
-- **(10 поени)** Потребно е да се имплементира функционалност за додавање на јадење во тековната нарачка. Во API-то, преку endpoint-от `/api/dishes/{id}/add-to-order`
-  овозможете додавање на јадење во тековната нарачка на најавениот корисник. Притоа, количината (quantity) на јадењето треба да се намали за 1. Во случај количината на
-  јадењето да изнесува 0, при обид за додавање во нарачката, треба да се фрли `DishOutOfStockException`. Во UI апликацијата, овозможето го копчето "Order Now" во рамки
-  на компонентата `DishDetails`. За тестирање искористете ги `testAddDishToOrder` и `testAddDishToOrderUi`.
-- **(10 поени)** Потребно е да се имплементира функционалност за бришење на јадење во тековната нарачка. Во API-то, преку endpoint-от `/api/dishes/{id}/remove-from-order`
-  овозможете додавање на јадење во тековната нарачка на најавениот корисник. Притоа, количината (quantity) на јадењето треба да се зголеми за 1.  Во UI апликацијата, овозможето го копчето за бришење во рамки
-  на компонентата `OrderList`. За тестирање искористете ги `testRemoveFromOrder` и `testRemoveFromOrderUi`.
-- **(5 поени)** Потребно е да се имплементира функционалност за потврдување (confirm) на тековната нарачка. Во API-то, преку
-  endpoint-от `/api/order/pending/confirm` овозможете потврда на тековната нарачка, така што статусот на истата ќе се промени
-  од PENDING во CONFIRMED. Во случај корисникот да се обиде да потврди празна тековна нарачка треба да се фрли `EmptyOrderException`.
-  Во UI апликацијата, овозможете го копчето "Confirm" во рамки на компонентата `OrderList`. После потврдување на нарачката треба
-  да се освежи приказот на истата. Исто така, имплементирајте ја потребната логика во `useOrder`.
-  За тестирање користете ги `testConfirmOrder` и `testConfirmOrderUi`.
-- **(5 поени)** Потребно е да се имплементира функционалност за откажување (cancel) на тековната нарачка. Во API-то, преку
-  endpoint-от `/api/order/pending/cancel` овозможете откажување на тековната нарачка, така што статусот на истата ќе се промени
-  од PENDING во CANCELED. Во случај корисникот да се обиде да откаже празна тековна нарачка треба да се фрли `EmptyOrderException`.
-  Во UI апликацијата, овозможете го копчето "Cancel" во рамки на компонентата `OrderList`. После откажување на нарачката треба
-  да се освежи приказот на истата. Исто така, имплементирајте ја потребната логика во `useOrder`.
-  За тестирање користете ги `testCancelOrder` и `testCancelOrderUi`.
-- **(10 поени)** Во рамки на API-то, заштите ја патеката "/api/user/me" да биде достапна само за најавен корисник. Исто така,
-  патеките: "/api/restaurants", "/api/restaurants/{id}", "/api/dishes", "/api/dishes/{id}", "/api/dishes/{id}/details", "/api/dishes/{id}/add-to-order",
-  "/api/dishes/{id}/remove-from-order", "/api/orders/pending", "/api/orders/pending/confirm" и "/api/orders/pending/cancel" треба да се достапни за
-  сите најавени корисници која било од улогите: CUSTOMER, OWNER и ADMIN. Патеките "/api/dishes/add", "/api/dishes/{id}/edit",
-  "/api/dishes/{id}/delete", "/api/restaurants/add", "/api/restaurants/{id}/edit" и "/api/restaurants/{id}/delete" треба да се достапни за
-  сите најавени корисници со улога OWNER или ADMIN. Патеката "/api/users/{username}" и секоја друга патека треба да е достапна само за корсник со улога ADMIN.
-  За тестирање искористете ги тестовите `testRoleCustomer` и `testRoleAdmin`.
+1. Јавен Git репозиториум
+   Апликацијата е поставена на јавен GitHub репозиториум:
 
-Забелешка: За тестирање достапни ви се корисниците со следните кориснички имиња и лозинки:
-- корисничко име: "customer" и лозника: "customer",
-- корисничко име: "owner" и лозника: "owner", и
-- корисничко име: "admin" и лозника: "admin".
+https://github.com/AnastasijaTashkova/KIII-project-Food_Delivery
 
-**ВАЖНО:** Сите споменати тестови се наоѓаат во класата `FoodDeliveryTests`. При извршување на тестовите API-то НЕ СМЕЕ да
-биде покренато, додека UI апликацијата МОРА да биде покрената, со цел тестовите успешно да се извршат.
+Структурата на репозиториумот е:
 
-## Упатство:
+food-delivery-solution/
+├── docker-compose.yml              # Оркестрација на сите сервиси
+├── food-delivery-backend/          # Spring Boot REST API
+│   ├── Dockerfile
+│   └── src/...
+└── food-delivery-frontend/         # React + Vite UI
+├── Dockerfile
+└── src/...
+За клонирање на проектот:
 
-- Во пакетот `mk.ukim.finki.fooddeliverybackend.model.domain` веќе се целосно дадени класите кои го репрезентираат моделот.
-- Во пакетот `mk.ukim.finki.fooddeliverybackend.dto.domain` веќе се целосно дадени DTOs за соодветните модели.
-- Во пакетот `mk.ukim.finki.fooddeliverybackend.repository` веќе се целосно дадени сите потребни репозиториуми.
-- Во пакетот `mk.ukim.finki.fooddeliverybackend.service.domain` и `mk.ukim.finki.fooddeliverybackend.service.application`
-  се веќе дефинирани интерфејсите за сервисната логика. Потребно е да се имплементираат овие интерфејси во
-  соодветните класи во пакетот `mk.ukim.finki.fooddeliverybackend.service.domain.impl` и `mk.ukim.finki.fooddeliverybackend.service.application.impl`.
-- Во пакетот `mk.ukim.finki.fooddeliverybackend.web.controllers` се дефинирани сите контролери кои се потребни.
-  За секој од методите во контролерите `DishController` и `OrderController` имате опис што треба да биде имплементирано.
-- Во рамки на UI апликацијата изгледот на сите компонетите е даден и НЕ СМЕЕ да го менувате. Потребно е само да ја имплементирате
-  логиката на означените места како и да направите bind помеѓу некоја компонента со даден state или handler.
-- Потребно е да конфигурирате заштита на патеки во API-то со Spring Security во класата `JwtSecurityWebConfig`.
+git clone https://github.com/AnastasijaTashkova/KIII-project-Food_Delivery.git
+cd KIII-project-Food_Delivery
+2. Докеризација
+   Апликацијата е докеризирана со три сервиси дефинирани во docker-compose.yml:
+
+Сервис	Слика / Build	Порта
+postgres	postgres:16	5432
+backend	Dockerfile (Spring Boot)	8080
+frontend	Dockerfile (Nginx)	3000 → 80
+Backend Dockerfile
+food-delivery-backend/Dockerfile користи multi-stage build:
+
+Build stage — eclipse-temurin:21-jdk: компилира и пакува JAR со Maven (mvnw clean package -DskipTests)
+Runtime stage — eclipse-temurin:21-jre: ја извршува апликацијата со java -jar app.jar
+Frontend Dockerfile
+food-delivery-frontend/Dockerfile исто така користи multi-stage build:
+
+Build stage — node:20-alpine: инсталира зависности и го гради React проектот (npm run build)
+Runtime stage — nginx:alpine: ги сервира статичките фајлови од /app/dist преку Nginx на порта 80
+Покренување на апликацијата
+docker compose up --build
+По успешно стартување:
+
+## Frontend: http://localhost:3000
+## Backend API: http://localhost:8080
+## PostgreSQL: localhost:5432 (DB: fooddelivery, user: fd, pass: fd)
+Базата на податоци автоматски се иницијализира со тест корисници (customer, owner, admin). Backend чека базата да биде целосно подготвена пред стартување (healthcheck).
 
